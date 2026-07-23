@@ -1,0 +1,11 @@
+{
+  "name": "credly-badge-toolkit",
+  "version": "1.0.0",
+  "description": "Minimal drop-in toolkit for displaying Credly badges",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "devDependencies": {
+    "vercel": "^32.0.0"
+  }
+}
