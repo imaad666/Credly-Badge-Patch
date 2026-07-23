@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Credly Badges Test</title>
+  <style>
+    #credly-badges {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 16px;
+      padding: 20px;
+    }
+    .credly-badge {
+      display: block;
+      text-decoration: none;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+    .credly-badge:hover {
+      transform: scale(1.05);
+    }
+    .credly-badge img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h1>Credly Badges Test</h1>
+  <div id="credly-badges">Loading...</div>
+
+  <script>
+    (async (username = 'imaad') => {
+      const container = document.getElementById('credly-badges');
+      try {
+        const badges = await fetch(`/api/credly-badges?username=${username}`).then(r => r.json());
+        if (badges.error) {
+          container.textContent = badges.error;
+          return;
+        }
+        container.innerHTML = badges.map(b => `
+          <a href="${b.url}" class="credly-badge" target="_blank">
+            <img src="${b.image}" alt="${b.name}" loading="lazy">
+          </a>
+        `).join('');
+      } catch (error) {
+        container.textContent = 'Failed to load badges';
+      }
+    })();
+  </script>
+</body>
+</html>
